@@ -1,0 +1,11 @@
+{
+  "installCommand": "cd placement-platform && npm install",
+  "buildCommand": "cd placement-platform && npm run build",
+  "outputDirectory": "placement-platform/dist",
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
