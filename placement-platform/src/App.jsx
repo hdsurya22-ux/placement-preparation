@@ -7,6 +7,7 @@ import Practice from "./pages/Practice";
 import Assessments from "./pages/Assessments";
 import Resources from "./pages/Resources";
 import Profile from "./pages/Profile";
+import Results from "./pages/Results";
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
         <Route path="assessments" element={<Assessments />} />
         <Route path="resources" element={<Resources />} />
         <Route path="profile" element={<Profile />} />
+      </Route>
+      <Route path="/results" element={<DashboardLayout />}>
+        <Route index element={<Results />} />
       </Route>
     </Routes>
   );

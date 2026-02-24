@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Radar,
   RadarChart,
@@ -14,6 +14,16 @@ import {
   CardDescription,
   CardContent
 } from "../components/ui/card";
+import { useNavigate } from "react-router-dom";
+import {
+  extractSkills,
+  computeReadinessScore,
+  buildChecklist,
+  buildPlan,
+  buildQuestions,
+  loadHistory,
+  saveHistory
+} from "../lib/analysis";
 
 const skillData = [
   { skill: "DSA", value: 75 },
@@ -89,7 +99,51 @@ function ProgressBar({ value, max }) {
 }
 
 function DashboardFixed() {
-  const [readiness, setReadiness] = useState(72);
+  const [company, setCompany] = useState("");
+  const [role, setRole] = useState("");
+  const [jdText, setJdText] = useState("");
+  const [entry, setEntry] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const history = loadHistory();
+    if (history.length > 0) {
+      setEntry(history[history.length - 1]);
+    }
+  }, []);
+
+  const readiness = entry ? entry.readinessScore : 72;
+
+  function handleAnalyze() {
+    const extracted = extractSkills(jdText);
+    const checklist = buildChecklist(extracted);
+    const plan = buildPlan(extracted);
+    const questions = buildQuestions(extracted);
+    const readinessScore = computeReadinessScore({
+      categoriesPresent: extracted.categoriesPresent,
+      company,
+      role,
+      jdText
+    });
+
+    const newEntry = {
+      id: `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      createdAt: new Date().toISOString(),
+      company: company.trim(),
+      role: role.trim(),
+      jdText,
+      extractedSkills: extracted,
+      plan,
+      checklist,
+      questions,
+      readinessScore
+    };
+
+    const history = loadHistory();
+    const updated = [...history, newEntry];
+    saveHistory(updated);
+    setEntry(newEntry);
+  }
 
   return (
     <section className="space-y-6">
@@ -100,6 +154,99 @@ function DashboardFixed() {
           next steps to keep momentum.
         </p>
       </div>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Job Description Analysis</CardTitle>
+          <CardDescription>
+            Paste a job description to extract skills, generate a plan, and
+            update your readiness score. Analyses are stored locally.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4 text-sm">
+            <div className="grid gap-4 md:grid-cols-2">
+              <div className="space-y-2">
+                <label className="block text-xs font-medium text-slate-300">
+                  Company (optional)
+                </label>
+                <input
+                  type="text"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                  className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  placeholder="e.g. KodNest"
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="block text-xs font-medium text-slate-300">
+                  Role (optional)
+                </label>
+                <input
+                  type="text"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none focus:border-primary focus:ring-1 focus:ring-primary"
+                  placeholder="e.g. SDE Intern"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <label className="block text-xs font-medium text-slate-300">
+                Job description text
+              </label>
+              <textarea
+                rows={5}
+                value={jdText}
+                onChange={(e) => setJdText(e.target.value)}
+                className="w-full rounded-md border border-slate-700 bg-slate-900 px-3 py-2 text-sm text-slate-100 outline-none focus:border-primary focus:ring-1 focus:ring-primary resize-vertical"
+                placeholder="Paste the JD here..."
+              />
+            </div>
+
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div className="text-xs text-slate-400">
+                {entry ? (
+                  <span>
+                    Latest readiness score:{" "}
+                    <span className="font-semibold text-slate-100">
+                      {entry.readinessScore}/100
+                    </span>{" "}
+                    •{" "}
+                    {new Date(entry.createdAt).toLocaleString(undefined, {
+                      dateStyle: "medium",
+                      timeStyle: "short"
+                    })}
+                  </span>
+                ) : (
+                  <span>
+                    No analysis yet. Paste a JD and run your first analysis.
+                  </span>
+                )}
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleAnalyze}
+                  className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-1.5 text-xs font-semibold text-white hover:bg-primary/90 transition-colors"
+                >
+                  Analyze JD
+                </button>
+                {entry && (
+                  <button
+                    type="button"
+                    onClick={() => navigate("/results")}
+                    className="inline-flex items-center justify-center rounded-full border border-slate-700 px-4 py-1.5 text-xs font-semibold text-slate-100 hover:bg-slate-900 transition-colors"
+                  >
+                    View full results
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="grid gap-6 lg:grid-cols-2">
         <div className="space-y-6">
@@ -113,22 +260,6 @@ function DashboardFixed() {
             <CardContent>
               <div className="relative flex items-center justify-center py-4">
                 <ProgressRing score={readiness} />
-              </div>
-              <div className="mt-4 space-y-2 text-xs text-slate-300">
-                <div className="flex items-center justify-between">
-                  <span>Adjust readiness (0–100)</span>
-                  <span className="font-medium text-slate-100">
-                    {readiness}
-                  </span>
-                </div>
-                <input
-                  type="range"
-                  min={0}
-                  max={100}
-                  value={readiness}
-                  onChange={(e) => setReadiness(Number(e.target.value))}
-                  className="w-full accent-primary"
-                />
               </div>
             </CardContent>
           </Card>
