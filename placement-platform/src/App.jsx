@@ -2,7 +2,7 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Landing from "./pages/Landing";
 import DashboardLayout from "./layouts/DashboardLayout";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/DashboardFixed";
 import Practice from "./pages/Practice";
 import Assessments from "./pages/Assessments";
 import Resources from "./pages/Resources";
