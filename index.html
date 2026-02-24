@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>KodNest Premium Build System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <!-- Top Bar -->
+      <header class="top-bar">
+        <div class="top-bar__project">KodNest Premium Build System</div>
+        <div class="top-bar__progress" aria-label="Build progress">
+          Step 1 / 4
+        </div>
+        <div class="top-bar__status">
+          <span class="status-badge status-badge--not-started">Not Started</span>
+        </div>
+      </header>
+
+      <!-- Context Header -->
+      <section class="context-header">
+        <div class="context-header__body">
+          <h1 class="context-header__title">
+            Define the frame before adding features.
+          </h1>
+          <p class="context-header__subtitle">
+            This workspace holds the structure, typography, and interaction rules for your product&mdash;no business logic has been added yet.
+          </p>
+        </div>
+      </section>
+
+      <!-- Main Layout -->
+      <main class="layout">
+        <!-- Primary Workspace -->
+        <section class="layout__primary" aria-label="Primary workspace">
+          <div class="card card--primary">
+            <header class="card__header">
+              <h2 class="card__title">Interface frame</h2>
+              <p class="card__subtitle">
+                Use this area for the main interaction of each step.
+              </p>
+            </header>
+            <div class="card__body">
+              <div class="empty-state">
+                <h3 class="empty-state__title">No feature content yet</h3>
+                <p class="empty-state__body">
+                  This space intentionally ships without product logic. When you are ready, introduce a single, clear interaction that fits this frame.
+                </p>
+                <button class="button button--secondary" type="button">
+                  View layout guidance
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <section class="system-section" aria-label="Design tokens preview">
+            <header class="system-section__header">
+              <h3 class="system-section__title">Design tokens</h3>
+              <p class="system-section__subtitle">
+                Core colors, typography, and spacing applied consistently across the system.
+              </p>
+            </header>
+            <div class="system-section__grid">
+              <div class="token-swatch token-swatch--background">
+                <div class="token-swatch__sample"></div>
+                <div class="token-swatch__meta">
+                  <span class="token-swatch__label">Background</span>
+                  <span class="token-swatch__value">#F7F6F3</span>
+                </div>
+              </div>
+              <div class="token-swatch token-swatch--text">
+                <div class="token-swatch__sample"></div>
+                <div class="token-swatch__meta">
+                  <span class="token-swatch__label">Primary text</span>
+                  <span class="token-swatch__value">#111111</span>
+                </div>
+              </div>
+              <div class="token-swatch token-swatch--accent">
+                <div class="token-swatch__sample"></div>
+                <div class="token-swatch__meta">
+                  <span class="token-swatch__label">Accent</span>
+                  <span class="token-swatch__value">#8B0000</span>
+                </div>
+              </div>
+              <div class="token-swatch token-swatch--success">
+                <div class="token-swatch__sample"></div>
+                <div class="token-swatch__meta">
+                  <span class="token-swatch__label">Success</span>
+                  <span class="token-swatch__value">Muted green</span>
+                </div>
+              </div>
+              <div class="token-swatch token-swatch--warning">
+                <div class="token-swatch__sample"></div>
+                <div class="token-swatch__meta">
+                  <span class="token-swatch__label">Warning</span>
+                  <span class="token-swatch__value">Muted amber</span>
+                </div>
+              </div>
+            </div>
+          </section>
+        </section>
+
+        <!-- Secondary Panel -->
+        <aside class="layout__secondary" aria-label="Step guidance">
+          <section class="card card--secondary">
+            <header class="card__header">
+              <h2 class="card__title">Step guidance</h2>
+              <p class="card__subtitle">
+                Keep this panel focused on the why and how of the current step.
+              </p>
+            </header>
+            <div class="card__body">
+              <p class="body-text">
+                Use this space to describe the intent of the step in one or two calm sentences. Avoid hype and keep the language specific.
+              </p>
+            </div>
+          </section>
+
+          <section class="card card--secondary">
+            <header class="card__header">
+              <h3 class="card__title">Prompt</h3>
+              <p class="card__subtitle">
+                Copy this when delegating build work to an AI or collaborator.
+              </p>
+            </header>
+            <div class="card__body">
+              <label class="field">
+                <span class="field__label">Prompt</span>
+                <textarea
+                  class="field__control field__control--textarea"
+                  rows="6"
+                  readonly
+                >Use the KodNest Premium Build System layout. Do not change the color system, typography, or spacing scale. Add exactly one focused feature into the primary workspace.</textarea>
+              </label>
+              <div class="button-row">
+                <button class="button button--primary" type="button">
+                  Copy
+                </button>
+                <button class="button button--secondary" type="button">
+                  Build in Lovable
+                </button>
+              </div>
+              <div class="button-row button-row--secondary">
+                <button class="button button--secondary" type="button">
+                  It Worked
+                </button>
+                <button class="button button--secondary" type="button">
+                  Error
+                </button>
+                <button class="button button--secondary" type="button">
+                  Add Screenshot
+                </button>
+              </div>
+            </div>
+          </section>
+
+          <section class="card card--secondary">
+            <header class="card__header">
+              <h3 class="card__title">Notes</h3>
+            </header>
+            <div class="card__body">
+              <label class="field">
+                <span class="field__label">Working notes</span>
+                <textarea
+                  class="field__control field__control--textarea"
+                  rows="4"
+                  placeholder="Capture decisions, trade-offs, or follow-ups."
+                ></textarea>
+              </label>
+            </div>
+          </section>
+        </aside>
+      </main>
+
+      <!-- Proof Footer -->
+      <footer class="proof-footer" aria-label="Delivery checklist">
+        <div class="proof-footer__content">
+          <h2 class="proof-footer__title">Proof of completion</h2>
+          <div class="proof-footer__items">
+            <div class="proof-item">
+              <label class="proof-item__header">
+                <input type="checkbox" class="proof-item__checkbox" />
+                <span class="proof-item__label">UI Built</span>
+              </label>
+              <input
+                type="text"
+                class="field__control proof-item__input"
+                placeholder="Link or note that shows the interface frame exists."
+              />
+            </div>
+            <div class="proof-item">
+              <label class="proof-item__header">
+                <input type="checkbox" class="proof-item__checkbox" />
+                <span class="proof-item__label">Logic Working</span>
+              </label>
+              <input
+                type="text"
+                class="field__control proof-item__input"
+                placeholder="Evidence that the core interaction runs without errors."
+              />
+            </div>
+            <div class="proof-item">
+              <label class="proof-item__header">
+                <input type="checkbox" class="proof-item__checkbox" />
+                <span class="proof-item__label">Test Passed</span>
+              </label>
+              <input
+                type="text"
+                class="field__control proof-item__input"
+                placeholder="Reference to a test or scenario you executed."
+              />
+            </div>
+            <div class="proof-item">
+              <label class="proof-item__header">
+                <input type="checkbox" class="proof-item__checkbox" />
+                <span class="proof-item__label">Deployed</span>
+              </label>
+              <input
+                type="text"
+                class="field__control proof-item__input"
+                placeholder="URL or environment name where this is deployed."
+              />
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
+
